@@ -1,0 +1,8 @@
+- filters_scope = [:tables, resource_name, :filters]
+
+.filters-group
+  = f.label field, t(field, scope: filters_scope)
+  = f.select field,
+    options_for_select(options, value),
+    { include_blank: true },
+    { data: { action: "filters#submit" } }

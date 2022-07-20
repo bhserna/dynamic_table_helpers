@@ -31,3 +31,13 @@
 
 en:
   hello: "Hello world"
+  tables:
+    products:
+      headers:
+        name: "Name"
+        category: "Category"
+        price: "Price"
+      filters:
+        category: "Filter by category"
+        search: "Search"
+

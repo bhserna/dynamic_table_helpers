@@ -1,0 +1,8 @@
+= form_with(url: filters_path,
+  class: "filters-container",
+  method: :get,
+  data: {controller: "filters", filters_target: "form", turbo_frame: "table"}) do |f|
+
+  - selects.each do |select|
+    = render "tables/filters/select", f: f, field: select.fetch(:field), resource_name: resource_name, options: select.fetch(:options), value: params[select.fetch(:field)]
+  = render "tables/filters/search", f: f, resource_name: resource_name, value: params[:search]

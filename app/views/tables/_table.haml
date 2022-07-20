@@ -1,0 +1,14 @@
+- headers_scope = [:tables, resource_name, :headers]
+
+= turbo_frame_tag "table" do
+  %div.loading-container
+    %div.loading-element Loading...
+  %div.table-container
+    %table
+      %thead
+        %tr
+          - fields.each do |field|
+            %th= t(field, scope: headers_scope)
+      %tbody
+        = render partial: "tables/row", collection: records, as: :record, locals: {cell_renderer: cell_renderer, fields: fields}
+  = raw pagy_nav(pagy)

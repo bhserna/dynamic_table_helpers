@@ -1,4 +1,8 @@
 %h1 Products
 
-= render "filters"
-= render "table", products: @products, pagy: @pagy
+= filters_for(:products) do |filters|
+  = filters.select(:category, Product.categories.keys)
+
+= table_for(:products, @products, fields: [:name, :category, :price]) do |table|
+  = table.cell_for(:price) do |product|
+    = number_to_currency(product.price)

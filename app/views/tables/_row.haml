@@ -1,0 +1,3 @@
+%tr{id: dom_id(record)}
+  - fields.each do |field|
+    %td= cell_renderer.render(field, record)

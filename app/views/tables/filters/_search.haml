@@ -1,0 +1,6 @@
+- filters_scope = [:tables, resource_name, :filters]
+
+.filters-group
+  = f.label :search, t(:search, scope: filters_scope)
+  = f.text_field :search,
+    { value: value, data: { action: "filters#submit" } }
