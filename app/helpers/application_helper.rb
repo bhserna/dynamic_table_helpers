@@ -25,7 +25,7 @@ module ApplicationHelper
     render "tables/filters",
       resource_name: builder.resource_name,
       filters_path: builder.filters_path,
-      selects: builder.selects
+      elements: builder.elements
   end
 
   class CellRenderer
@@ -70,13 +70,39 @@ module ApplicationHelper
     end
   end
 
+  class SelectBuilder
+    include ActiveModel::Model
+    attr_accessor :resource_name, :field, :select_options
+    
+    def to_partial_path
+      "tables/filters/select"
+    end
+
+    def render_attributes(f, params)
+      { f: f, resource_name: resource_name, field: field, options: select_options, value: params[field] }
+    end
+  end
+
+  class TextFieldBuilder
+    include ActiveModel::Model
+    attr_accessor :resource_name, :field
+
+    def to_partial_path
+      "tables/filters/text_field"
+    end
+
+    def render_attributes(f, params)
+      { f: f, resource_name: resource_name, field: field, value: params[field] }
+    end
+  end
+
   class FiltersBuilder
-    attr_reader :resource_name, :opts, :selects
+    attr_reader :resource_name, :opts, :elements
 
     def initialize(resource_name, opts = {})
       @resource_name = resource_name
       @opts = opts
-      @selects = []
+      @elements = []
     end
 
     def filters_path
@@ -86,7 +112,12 @@ module ApplicationHelper
     end
 
     def select(field, select_options)
-      @selects << {field: field, options: select_options}
+      @elements << SelectBuilder.new(resource_name: resource_name, field: field, select_options: select_options)
+      nil
+    end
+
+    def text_field(field)
+      @elements << TextFieldBuilder.new(resource_name: resource_name, field: field)
       nil
     end
 
@@ -94,5 +125,4 @@ module ApplicationHelper
       opts.fetch(:view_context)
     end
   end
-
 end

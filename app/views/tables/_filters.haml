@@ -3,6 +3,5 @@
   method: :get,
   data: {controller: "filters", filters_target: "form", turbo_frame: "table"}) do |f|
 
-  - selects.each do |select|
-    = render "tables/filters/select", f: f, field: select.fetch(:field), resource_name: resource_name, options: select.fetch(:options), value: params[select.fetch(:field)]
-  = render "tables/filters/search", f: f, resource_name: resource_name, value: params[:search]
+  - element_builders.each do |element_builder|
+    = render element_builder, element_builder.render_attributes(f, params)

@@ -1,0 +1,6 @@
+- filters_scope = [:tables, resource_name, :filters]
+
+.filters-group
+  = f.label field, t(field, scope: filters_scope)
+  = f.text_field field,
+    { value: value, data: { action: "filters#submit" } }

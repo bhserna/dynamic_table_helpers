@@ -2,6 +2,7 @@
 
 = filters_for(:products) do |filters|
   = filters.select(:category, Product.categories.keys)
+  = filters.text_field(:search)
 
 = table_for(:products, @products, fields: [:name, :category, :price]) do |table|
   = table.cell_for(:price) do |product|
