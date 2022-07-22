@@ -1,0 +1,6 @@
+%h1 Contacts
+
+= filters_for(:contacts) do |filters|
+  = filters.text_field(:search)
+
+= table_for(:contacts, @contacts, fields: [:name, :phone_number])

@@ -25,7 +25,7 @@ module ApplicationHelper
     render "tables/filters",
       resource_name: builder.resource_name,
       filters_path: builder.filters_path,
-      elements: builder.elements
+      element_builders: builder.element_builders
   end
 
   class CellRenderer
@@ -97,12 +97,12 @@ module ApplicationHelper
   end
 
   class FiltersBuilder
-    attr_reader :resource_name, :opts, :elements
+    attr_reader :resource_name, :opts, :element_builders
 
     def initialize(resource_name, opts = {})
       @resource_name = resource_name
       @opts = opts
-      @elements = []
+      @element_builders = []
     end
 
     def filters_path
@@ -112,12 +112,12 @@ module ApplicationHelper
     end
 
     def select(field, select_options)
-      @elements << SelectBuilder.new(resource_name: resource_name, field: field, select_options: select_options)
+      @element_builders << SelectBuilder.new(resource_name: resource_name, field: field, select_options: select_options)
       nil
     end
 
     def text_field(field)
-      @elements << TextFieldBuilder.new(resource_name: resource_name, field: field)
+      @element_builders << TextFieldBuilder.new(resource_name: resource_name, field: field)
       nil
     end
 
